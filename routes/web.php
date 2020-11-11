@@ -49,7 +49,7 @@ Route::delete('diagnosis/destroy','DiagnosisController@destroy')->middleware('ve
 */
 
 //まとめると
-Route::resource('diagnosises','DiagnosisController')->middleware('verified');
+Route::resource('diagnosises','DiagnosesController')->middleware('verified');
 
 
 
