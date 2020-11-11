@@ -1,0 +1,42 @@
+診断のシステムについて
+
+
+数字の大小でどちらか判断して組み合わせて結果を表示したい
+
+既存のサイトを参考に考える
+https://motivation-up.com/whats/16type.html
+
+☆診断結果はuser_idと最新のcreated_atで導き表示する。
+○○さんの最新の結果→診断結果ページ
+
+
+
+Diagnoses テーブルは、Qに対するAが20個のカラム　user_idの合計21個のカラム
+
+
+name属性がXorY？のときX選んだら1 Y選んだら-1 　数字がプラスの時XorY？のXタイプになる　数字がマイナスの時XorYのYタイプになる
+nameが前方一致なら合計してタイプ４つ出して表示したい
+
+//$name = $request->input('XorY?');
+
+$request->toArray(); 
+
+    //$name = XorY?;
+for($i = 0; $i<$request.Length; $i++){
+    if(preg_match( '/^XorY/', $request)){
+        XorYSum +=value;
+    }
+
+}
+
+if(XorYSum > 0){
+    $xy = 'X';
+}
+else{
+    $xy ='Y';
+}
+
+
+
+
+

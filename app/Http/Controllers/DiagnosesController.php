@@ -76,17 +76,75 @@ class DiagnosisController extends Controller
 
 
         //集計
+        $ei = 0;
+        $sn = 0;
+        $tf = 0;
+        $jp = 0;
 
         //DBに診断結果の登録
         $diagnosis = new \App\Diagnosis;
         
         $user = Auth::user();    //現在認証されているユーザーの取得
 
+
+        $reqArray = [$request->input('EorI1'),$request->input('EorI2'),$request->input('EorI3'),$request->input('EorI4'),$request->input('EorI5'),
+                    $request->input('SorN1'),$request->input('SorN2'),$request->input('SorN3'),$request->input('SorN4'),$request->input('SorN5'),
+                    $request->input('TorF1'),
+
+                ];
+
+        //取得した値を配列化 
+
+        for($i = 0; $i<$request.Length; $i++){
+            if(preg_match( '/^EorI/', $request)){ //前方一致の場合に変数に足しこんでいく
+                $ei += value;
+            }
+            else if(preg_match( '/^SorN/', $request)){
+                $sn += value;
+            }
+            else if(preg_match( '/^TorF/', $request)){
+                $tf += value;
+            }
+            else if(preg_match( '/^JorP/', $request)){
+                $jp += value;
+            }
+
+        }
+
+        if($ei > 0){
+            $ei = 'E';
+        }
+        else{
+            $ei ='I';
+        }
+
+        if($sn > 0){
+            $sn = 'S';
+        }
+        else{
+            $sn ='N';
+        }
+
+        if($tf > 0){
+            $tf = 'T';
+        }
+        else{
+            $tf ='F';
+        }
+        if($jp > 0){
+            $jp = 'J';
+        }
+        else{
+            $jp ='P';
+        }
+
+        /*
         return Diagnosis::create([
             
             'user_id' => $user,
-            $request->all()
-            /*
+            $request->all():
+
+            
             'EorI1' => $request['EorI1'],
             'EorI2' => $request['EorI2'],
             'EorI3' => $request['EorI3'],
@@ -107,12 +165,11 @@ class DiagnosisController extends Controller
             'JorP3' => $request['JorP3'],
             'JorP4' => $request['JorP4'],
             'JorP5' => $request['JorP5'],
-            */
-
-            
         ]);
-
-        //$diagnosis = save();
+            */
+        
+        
+        
 
         //診断結果登録表示 Viewメソッドに引数を指定して返す
         return view('diagnosises.diagnosis-16type-result',['type' => $type ,]);
