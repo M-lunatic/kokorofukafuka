@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Diagnaosis;
+use App\Diagnosis;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
-class DiagnosisController extends Controller
+class DiagnosesController extends Controller
 {
     
     protected function validator(array $data)
@@ -13,26 +14,26 @@ class DiagnosisController extends Controller
         return Validator::make($data, [
 
             
-            'EorI1' => ['required', 'string', 'max:255'],
-            'EorI2' => ['required', 'string', 'max:255'],
-            'EorI3' => ['required', 'string', 'max:255'],
-            'EorI4' => ['required', 'string', 'max:255'],
-            'EorI5' => ['required', 'string', 'max:255'],
-            'SorN1' => ['required', 'string', 'max:255'],
-            'SorN2' => ['required', 'string', 'max:255'],
-            'SorN3' => ['required', 'string', 'max:255'],
-            'SorN4' => ['required', 'string', 'max:255'],
-            'SorN5' => ['required', 'string', 'max:255'],
-            'TorF1' => ['required', 'string', 'max:255'],
-            'TorF2' => ['required', 'string', 'max:255'],
-            'TorF3' => ['required', 'string', 'max:255'],
-            'TorF4' => ['required', 'string', 'max:255'],
-            'TorF5' => ['required', 'string', 'max:255'],
-            'JorP1' => ['required', 'string', 'max:255'],
-            'JorP2' => ['required', 'string', 'max:255'],
-            'JorP3' => ['required', 'string', 'max:255'],
-            'JorP4' => ['required', 'string', 'max:255'],
-            'JorP5' => ['required', 'string', 'max:255'],
+            'EorI1' => ['required', 'integer', 'max:10'],
+            'EorI2' => ['required', 'integer', 'max:10'],
+            'EorI3' => ['required', 'integer', 'max:10'],
+            'EorI4' => ['required', 'integer', 'max:10'],
+            'EorI5' => ['required', 'integer', 'max:10'],
+            'SorN1' => ['required', 'integer', 'max:10'],
+            'SorN2' => ['required', 'integer', 'max:10'],
+            'SorN3' => ['required', 'integer', 'max:10'],
+            'SorN4' => ['required', 'integer', 'max:10'],
+            'SorN5' => ['required', 'integer', 'max:10'],
+            'TorF1' => ['required', 'integer', 'max:10'],
+            'TorF2' => ['required', 'integer', 'max:10'],
+            'TorF3' => ['required', 'integer', 'max:10'],
+            'TorF4' => ['required', 'integer', 'max:10'],
+            'TorF5' => ['required', 'integer', 'max:10'],
+            'JorP1' => ['required', 'integer', 'max:10'],
+            'JorP2' => ['required', 'integer', 'max:10'],
+            'JorP3' => ['required', 'integer', 'max:10'],
+            'JorP4' => ['required', 'integer', 'max:10'],
+            'JorP5' => ['required', 'integer', 'max:10'],
 
             
         ]);
@@ -49,7 +50,7 @@ class DiagnosisController extends Controller
     public function index()
     {
         //診断いろいろ
-        return view('diagnosises.diagnosis-top');
+        return view('diagnoses.diagnosis-top');
     }
 
     /**
@@ -61,7 +62,7 @@ class DiagnosisController extends Controller
     {    
 
         //診断‐問題文
-        return view('diagnosises.diagnosis-16type');
+        return view('diagnoses.diagnosis-16type');
     }
 
     /**
@@ -73,106 +74,129 @@ class DiagnosisController extends Controller
     public function store(Request $request)
     {
 
+        //取得した値を変数に
+        $ei1 = $request->input('EorI1');
+        $ei2 = $request->input('EorI2');
+        $ei3 = $request->input('EorI3');
+        $ei4 = $request->input('EorI4');
+        $ei5 = $request->input('EorI5');
+        $sn1 = $request->input('SorN1');
+        $sn2 = $request->input('SorN2');
+        $sn3 = $request->input('SorN3');
+        $sn4 = $request->input('SorN4');
+        $sn5 = $request->input('SorN5');
+        $tf1 = $request->input('TorF1');
+        $tf2 = $request->input('TorF2'); 
+        $tf3 = $request->input('TorF3'); 
+        $tf4 = $request->input('TorF4'); 
+        $tf5 = $request->input('TorF5');
+        $jp1 = $request->input('JorP1');
+        $jp2 = $request->input('JorP2');
+        $jp3 = $request->input('JorP3');
+        $jp4 = $request->input('JorP4');
+        $jp5 = $request->input('JorP5');
 
+        //集計用の変数
+        $eiSum = 0;
+        $snSum = 0;
+        $tfSum = 0;
+        $jpSum = 0;
 
-        //集計
-        $ei = 0;
-        $sn = 0;
-        $tf = 0;
-        $jp = 0;
+        //取得した値を配列化
+        $reqArray = [
+            $ei1,$ei2,$ei3,$ei4,$ei5,$sn1,$sn2,$sn3,$sn4,$sn5,$tf1,$tf2,$tf3,$tf4,$tf5,$jp1,$jp2,$jp3,$jp4,$jp5,];
+
+        $arrayCount = 20;
+
+        $i = 0;
+        while($i<$arrayCount){
+            if($i >=0 && $i<=4){
+                $eiSum += $reqArray[$i];
+                $i++;
+            }
+            else if($i>4 && $i<=9){
+                $snSum += $reqArray[$i];
+                $i++;
+            }
+            else if($i>9 && $i<=14){
+                $tfSum += $reqArray[$i];
+                $i++;
+            }
+            else if($i>14 && $i<$arrayCount){
+
+                $jpSum += $reqArray[$i];
+                $i++;
+            }
+
+        }
+
+        //typeを出す　数字がプラスの時XorY？のXタイプになる　数字がマイナスの時XorYのYタイプになる
+        $eistr = '';
+        $snstr = '';
+        $tfstr = '';
+        $jpstr = '';
+
+        if($eiSum > 0){
+            $eistr .= 'E';
+        }
+        else if($eiSum<=-1){
+            $eistr .='I';
+        }
+
+        if($snSum > 0){
+            $snstr .= 'S';
+        }
+        else if($snSum<=-1){
+            $snstr .= 'N';
+        }
+
+        if($tfSum > 0){
+            $tfstr .= 'T';
+        }
+        else if($tfSum<=-1){
+            $tfstr .='F';
+        }
+        if($jpSum > 0){
+            $jpstr .= 'J';
+        }
+        else if($jpSum<=-1){
+            $jpstr .='P';
+        }
+
+        //表示されない
+        $type = $eistr.$snstr.$tfstr.$jpstr;
+        
+        //現在認証されているユーザーの取得
+        $user = Auth::id();
 
         //DBに診断結果の登録
-        $diagnosis = new \App\Diagnosis;
-        
-        $user = Auth::user();    //現在認証されているユーザーの取得
-
-
-        $reqArray = [$request->input('EorI1'),$request->input('EorI2'),$request->input('EorI3'),$request->input('EorI4'),$request->input('EorI5'),
-                    $request->input('SorN1'),$request->input('SorN2'),$request->input('SorN3'),$request->input('SorN4'),$request->input('SorN5'),
-                    $request->input('TorF1'),
-
-                ];
-
-        //取得した値を配列化 
-
-        for($i = 0; $i<$request.Length; $i++){
-            if(preg_match( '/^EorI/', $request)){ //前方一致の場合に変数に足しこんでいく
-                $ei += value;
-            }
-            else if(preg_match( '/^SorN/', $request)){
-                $sn += value;
-            }
-            else if(preg_match( '/^TorF/', $request)){
-                $tf += value;
-            }
-            else if(preg_match( '/^JorP/', $request)){
-                $jp += value;
-            }
-
-        }
-
-        if($ei > 0){
-            $ei = 'E';
-        }
-        else{
-            $ei ='I';
-        }
-
-        if($sn > 0){
-            $sn = 'S';
-        }
-        else{
-            $sn ='N';
-        }
-
-        if($tf > 0){
-            $tf = 'T';
-        }
-        else{
-            $tf ='F';
-        }
-        if($jp > 0){
-            $jp = 'J';
-        }
-        else{
-            $jp ='P';
-        }
-
-        /*
-        return Diagnosis::create([
+        Diagnosis::create([
             
             'user_id' => $user,
-            $request->all():
-
-            
-            'EorI1' => $request['EorI1'],
-            'EorI2' => $request['EorI2'],
-            'EorI3' => $request['EorI3'],
-            'EorI4' => $request['EorI4'],
-            'EorI5' => $request['EorI5'],
-            'SorN1' => $request['SorN1'],
-            'SorN2' => $request['SorN2'],
-            'SorN3' => $request['SorN3'],
-            'SorN4' => $request['SorN4'],
-            'SorN5' => $request['SorN5'],
-            'TorF1' => $request['TorF1'],
-            'TorF2' => $request['TorF2'],
-            'TorF3' => $request['TorF3'],
-            'TorF4' => $request['TorF4'],
-            'TorF5' => $request['TorF5'],
-            'JorP1' => $request['JorP1'],
-            'JorP2' => $request['JorP2'],
-            'JorP3' => $request['JorP3'],
-            'JorP4' => $request['JorP4'],
-            'JorP5' => $request['JorP5'],
+            'EorI1' => $ei1,
+            'EorI2' => $ei2,
+            'EorI3' => $ei3,
+            'EorI4' => $ei4,
+            'EorI5' => $ei5,
+            'SorN1' => $sn1,
+            'SorN2' => $sn2,
+            'SorN3' => $sn3,
+            'SorN4' => $sn4,
+            'SorN5' => $sn5,
+            'TorF1' => $tf1,
+            'TorF2' => $tf2,
+            'TorF3' => $tf3,
+            'TorF4' => $tf4,
+            'TorF5' => $tf5,
+            'JorP1' => $jp1,
+            'JorP2' => $jp2,
+            'JorP3' => $jp3,
+            'JorP4' => $jp4,
+            'JorP5' => $jp5,
         ]);
-            */
         
-        
-        
-
         //診断結果登録表示 Viewメソッドに引数を指定して返す
-        return view('diagnosises.diagnosis-16type-result',['type' => $type ,]);
+        return view('diagnoses.diagnosis-16type-result',compact('type'));
     }
 
     /**
@@ -184,11 +208,7 @@ class DiagnosisController extends Controller
     public function show($id)
     {
         //いままでの結果画面の表示
-        /*
-        $result = DiagnosisResult::find($id);
-        return $result->toArray();
-*/
-        
+ 
     }
 
     /**
