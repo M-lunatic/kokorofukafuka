@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Diagnosis extends Model
 {
     //
-    protected $fillable = [            
+    protected $fillable = [             
             'EorI1' ,
             'EorI2' ,
             'EorI3' ,
@@ -35,5 +35,6 @@ class Diagnosis extends Model
         ];
         protected $casts = [
             'created_at' => 'datetime',
+            'updated_at' => 'datetime',
         ];
 }
