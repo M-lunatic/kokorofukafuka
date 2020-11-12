@@ -8,7 +8,7 @@
 </head>
 <h1>診断画面</h1>
 <div>
-  <form method="POST" action="{{ route('diagnosises.store') }}"> {{ csrf_field() }}
+  <form method="POST" action="{{ route('diagnosis.store') }}"> {{ csrf_field() }}
     <!-- E or I name=EorI? value=check? -->
     <ol>
       <li>大人数の前に出ると…<br /></li> <label>{{Form::radio('EorI1', '1',true,['class' => 'question'])}}イキイキする</label> <label>{{Form::radio('EorI1', '-1',false,['class' => 'question'])}}緊張する</label><br>
