@@ -33,4 +33,7 @@ class Diagnosis extends Model
             //
             'user_id',
         ];
+        protected $casts = [
+            'created_at' => 'datetime',
+        ];
 }
