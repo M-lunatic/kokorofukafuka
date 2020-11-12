@@ -38,18 +38,18 @@ Route::get('/', function () {
 
 //性格診断ページ
 /*
-Route::get('diagnosis/index','DiagnosisController@index')->middleware('verified');
-Route::get('diagnosis/create','DiagnosisController@create')->middleware('verified');
-Route::post('diagnosis/store','DiagnosisController@store')->middleware('verified');
-Route::get('diagnosis/show','DiagnosisController@show')->middleware('verified');
-Route::get('diagnosis/{id}/edit','DiagnosisController@edit')->middleware('verified');
-Route::put('diagnosis/update','DiagnosisController@update')->middleware('verified');
-Route::delete('diagnosis/destroy','DiagnosisController@destroy')->middleware('verified');
+Route::get('Diagnoses/index','DiagnosesController@index')->middleware('verified');
+Route::get('Diagnoses/create','DiagnosesController@create')->middleware('verified');
+Route::post('Diagnoses/store','DiagnosesController@store')->middleware('verified');
+Route::get('Diagnoses/show','DiagnosesController@show')->middleware('verified');
+Route::get('Diagnoses/{id}/edit','DiagnosesController@edit')->middleware('verified');
+Route::put('Diagnoses/update','DiagnosesController@update')->middleware('verified');
+Route::delete('Diagnoses/destroy','DiagnosesController@destroy')->middleware('verified');
 
 */
 
 //まとめると
-Route::resource('diagnosises','DiagnosesController')->middleware('verified');
+Route::resource('diagnosis','DiagnosesController')->middleware('verified');
 
 
 
