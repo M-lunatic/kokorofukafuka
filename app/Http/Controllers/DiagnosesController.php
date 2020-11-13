@@ -163,8 +163,63 @@ class DiagnosesController extends Controller
             $jpstr .='P';
         }
 
-        //表示されない
+        //タイプの表示
         $type = $eistr.$snstr.$tfstr.$jpstr;
+
+        //type別にリンク
+        $link ="";
+
+        switch($type){
+            case 'ESTJ':
+                $link = "https://www.google.com/search?q=ESTJ";
+            break;
+            case 'ESTP':
+                $link = "https://www.google.com/search?q=ESTP";
+            break;
+            case 'ESFJ':
+                $link = "https://www.google.com/search?q=ESFJ";
+            break;
+            case 'ESFP':
+                $link = "https://www.google.com/search?q=ESFP";
+            break;                
+            case 'ENTJ':
+                $link = "https://www.google.com/search?q=ENTJ";
+            break;
+            case 'ENTP':
+                $link = "https://www.google.com/search?q=ENTP";
+            break;
+            case 'ENFJ':
+                $link = "https://www.google.com/search?q=ENFJ";
+            break;
+            case 'ENFP':
+                $link = "https://www.google.com/search?q=ENFP";
+            break;                
+            case 'ISTJ':
+                $link = "https://www.google.com/search?q=ISTJ";
+            break;
+            case 'ISTP':
+                $link = "https://www.google.com/search?q=ISTP";
+            break;
+            case 'ISFJ':
+                $link = "https://www.google.com/search?q=ISFJ";
+            break;
+            case 'ISFP':
+                $link = "https://www.google.com/search?q=ISFP";
+            break;                
+            case 'INTJ':
+                $link = "https://www.google.com/search?q=INTJ";
+            break;
+            case 'INTP':
+                $link = "https://www.google.com/search?q=INTP";
+            break;
+            case 'INFJ':
+                $link = "https://www.google.com/search?q=INFJ";
+            break;
+            case 'INFP':
+                $link = "https://www.google.com/search?q=INFP";
+            break;
+        }  
+
         
         //現在認証されているユーザーの取得
         $user = Auth::id();
@@ -194,9 +249,11 @@ class DiagnosesController extends Controller
             'JorP4' => $jp4,
             'JorP5' => $jp5,
         ]);
+
         
+
         //診断結果登録表示 Viewメソッドに引数を指定して返す
-        return view('diagnoses.diagnosis-16type-result',compact('type'));
+        return view('diagnoses.diagnosis-16type-result',compact('type','link'));
     }
 
     /**
@@ -208,7 +265,8 @@ class DiagnosesController extends Controller
     public function show($id)
     {
         //いままでの結果画面の表示
- 
+
+        //return view('diagnoses');
     }
 
     /**
@@ -220,6 +278,9 @@ class DiagnosesController extends Controller
     public function edit($id)
     {
         //過去の診断結果の編集
+
+
+        //return view();
     }
 
     /**
@@ -232,7 +293,7 @@ class DiagnosesController extends Controller
     public function update(Request $request, $id)
     {
         //診断結果の更新
-
+        //return view();
     }
 
     /**
@@ -244,5 +305,6 @@ class DiagnosesController extends Controller
     public function destroy($id)
     {
         //診断結果の消去
+        //return view();
     }
 }
