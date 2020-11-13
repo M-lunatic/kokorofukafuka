@@ -82,5 +82,9 @@ class RegisterController extends Controller
             return redirect('/home');
 
     }
+    protected function destroy(){
+        //退会機能
+        //return redirect('/');
+    }
 
 }
