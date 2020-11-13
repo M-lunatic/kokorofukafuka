@@ -22,19 +22,22 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 //Auth::routes();
 
-Route::get('home','HomeController@index')->middleware('verified');
+Route::get('/home','HomeController@index')->middleware('verified');
+Route::get('/mypage','HomeController@mypage')->name('mypage');
+
+
+//Route::edit('mypage/{id}/edit','LoginController@edit')->middleware('auth');
+
+/*
+Route::edit('mypage/{id}/edit','LoginController@edit')->middleware('auth');
+Route::put('mypage/update','LoginController@Update')->middleware('auth');
+Route::delete('mypage/user_delete','RegisterController@destroy')->middleware('auth');
+*/
 
 Route::get('verification.verify', function(){
     return view('auth.verified');
 })->middleware('verified');
 
-
-/* default
-Route::get('/', function () {
-    return view('welcome');
-});
-
-*/
 
 //性格診断ページ
 /*
