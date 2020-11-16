@@ -44,7 +44,7 @@ Route::get('verification.verify', function(){
 Route::get('Diagnoses/index','DiagnosesController@index')->middleware('verified');
 Route::get('Diagnoses/create','DiagnosesController@create')->middleware('verified');
 Route::post('Diagnoses/store','DiagnosesController@store')->middleware('verified');
-Route::get('Diagnoses/show','DiagnosesController@show')->middleware('verified');
+Route::get('Diagnoses/{id}/show','DiagnosesController@show')->middleware('verified');
 Route::get('Diagnoses/{id}/edit','DiagnosesController@edit')->middleware('verified');
 Route::put('Diagnoses/update','DiagnosesController@update')->middleware('verified');
 Route::delete('Diagnoses/destroy','DiagnosesController@destroy')->middleware('verified');
@@ -52,7 +52,7 @@ Route::delete('Diagnoses/destroy','DiagnosesController@destroy')->middleware('ve
 */
 
 //まとめると
-Route::resource('diagnosis','DiagnosesController')->middleware('verified');
+Route::resource('diagnoses','DiagnosesController')->middleware('verified');
 
 
 
