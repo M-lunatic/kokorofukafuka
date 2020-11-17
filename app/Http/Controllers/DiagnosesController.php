@@ -335,7 +335,7 @@ class DiagnosesController extends Controller
         if(empty($diagnosis[0])){
             $msg = 'データがありません。';
         }
-        return redirect('diagnoses.diagnosis-top',compact('diagnosis','msg'));
+        return redirect('diagnoses.diagnosis-top');
         
     }
 }
