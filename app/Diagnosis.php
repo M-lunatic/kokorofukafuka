@@ -3,12 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Diagnosis extends Model
 {
     //
     protected $fillable = [
-            'user_id',             
+            'user_id',
+            'type',
+            'type_url',             
             'EorI1' ,
             'EorI2' ,
             'EorI3' ,
@@ -29,6 +32,7 @@ class Diagnosis extends Model
             'JorP3' ,
             'JorP4' ,
             'JorP5' ,
+
         ];
         protected $hidden = [
             //
@@ -38,4 +42,11 @@ class Diagnosis extends Model
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
+
+    //ソフトデリート用の記述
+    use SoftDeletes;
+
+    //protected $table = 'users';
+    protected $dates = ['deleted_at'];
+
 }
