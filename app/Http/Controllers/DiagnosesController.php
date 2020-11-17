@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Diagnosis;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB; // DB ファサードを use する
 use Illuminate\Support\Facades\Validator;
 class DiagnosesController extends Controller
 {
@@ -49,8 +49,21 @@ class DiagnosesController extends Controller
     
     public function index()
     {
-        //診断いろいろ
-        return view('diagnoses.diagnosis-top');
+        //診断TOP
+        //user_idの取得
+        $user = Auth::id();
+
+        $diagnosis = Diagnosis::where('user_id', $user)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        $msg ='';
+
+        if(empty($diagnosis[0])){
+            $msg = 'データがありません。';
+        }
+
+        return view('diagnoses.diagnosis-top',compact('diagnosis','msg'));
     }
 
     /**
@@ -167,56 +180,56 @@ class DiagnosesController extends Controller
         $type = $eistr.$snstr.$tfstr.$jpstr;
 
         //type別にリンク
-        $link ="";
+        $type_url ="";
 
         switch($type){
             case 'ESTJ':
-                $link = "https://www.google.com/search?q=ESTJ";
+                $type_url = "https://www.google.com/search?q=ESTJ";
             break;
             case 'ESTP':
-                $link = "https://www.google.com/search?q=ESTP";
+                $type_url = "https://www.google.com/search?q=ESTP";
             break;
             case 'ESFJ':
-                $link = "https://www.google.com/search?q=ESFJ";
+                $type_url = "https://www.google.com/search?q=ESFJ";
             break;
             case 'ESFP':
-                $link = "https://www.google.com/search?q=ESFP";
+                $type_url = "https://www.google.com/search?q=ESFP";
             break;                
             case 'ENTJ':
-                $link = "https://www.google.com/search?q=ENTJ";
+                $type_url = "https://www.google.com/search?q=ENTJ";
             break;
             case 'ENTP':
-                $link = "https://www.google.com/search?q=ENTP";
+                $type_url = "https://www.google.com/search?q=ENTP";
             break;
             case 'ENFJ':
-                $link = "https://www.google.com/search?q=ENFJ";
+                $type_url = "https://www.google.com/search?q=ENFJ";
             break;
             case 'ENFP':
-                $link = "https://www.google.com/search?q=ENFP";
+                $type_url = "https://www.google.com/search?q=ENFP";
             break;                
             case 'ISTJ':
-                $link = "https://www.google.com/search?q=ISTJ";
+                $type_url = "https://www.google.com/search?q=ISTJ";
             break;
             case 'ISTP':
-                $link = "https://www.google.com/search?q=ISTP";
+                $type_url = "https://www.google.com/search?q=ISTP";
             break;
             case 'ISFJ':
-                $link = "https://www.google.com/search?q=ISFJ";
+                $type_url = "https://www.google.com/search?q=ISFJ";
             break;
             case 'ISFP':
-                $link = "https://www.google.com/search?q=ISFP";
+                $type_url = "https://www.google.com/search?q=ISFP";
             break;                
             case 'INTJ':
-                $link = "https://www.google.com/search?q=INTJ";
+                $type_url = "https://www.google.com/search?q=INTJ";
             break;
             case 'INTP':
-                $link = "https://www.google.com/search?q=INTP";
+                $type_url = "https://www.google.com/search?q=INTP";
             break;
             case 'INFJ':
-                $link = "https://www.google.com/search?q=INFJ";
+                $type_url = "https://www.google.com/search?q=INFJ";
             break;
             case 'INFP':
-                $link = "https://www.google.com/search?q=INFP";
+                $type_url = "https://www.google.com/search?q=INFP";
             break;
         }  
 
@@ -228,6 +241,8 @@ class DiagnosesController extends Controller
         Diagnosis::create([
             
             'user_id' => $user,
+            'type' => $type,
+            'type_url' => $type_url,
             'EorI1' => $ei1,
             'EorI2' => $ei2,
             'EorI3' => $ei3,
@@ -250,10 +265,9 @@ class DiagnosesController extends Controller
             'JorP5' => $jp5,
         ]);
 
-        
-
+        $diagnosis = [$type_url, $type];
         //診断結果登録表示 Viewメソッドに引数を指定して返す
-        return view('diagnoses.diagnosis-16type-result',compact('type','link'));
+        return view('diagnoses.diagnosis-16type-result',compact('diagnosis'));
     }
 
     /**
@@ -262,11 +276,12 @@ class DiagnosesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id) 
     {
-        //いままでの結果画面の表示
-
-        //return view('diagnoses');
+        //idと一致するレコードを1つ指定
+        $diagnosis = Diagnosis::find($id);
+        return view('diagnoses.diagnosis-16type-show',compact('diagnosis'));
+        
     }
 
     /**
@@ -278,9 +293,11 @@ class DiagnosesController extends Controller
     public function edit($id)
     {
         //過去の診断結果の編集
+        $diagnosis = Diagnosis::find($id);
 
 
-        //return view();
+        return view('diagnoses.diagnosis-16type-edit',compact('diagnosis'));
+
     }
 
     /**
@@ -293,7 +310,12 @@ class DiagnosesController extends Controller
     public function update(Request $request, $id)
     {
         //診断結果の更新
-        //return view();
+        
+        $diagnosis = Diagnosis::find($id);
+        $diagnosis->fill( $request->all() ); 
+        $diagnosis->save();
+        
+        return redirect('diagnoses.diagnosis-top',compact('diagnosis'));
     }
 
     /**
@@ -305,6 +327,15 @@ class DiagnosesController extends Controller
     public function destroy($id)
     {
         //診断結果の消去
-        //return view();
+        $diagnosis = Diagnosis::find($id);
+        $diagnosis->delete();
+        
+        $msg ='';
+
+        if(empty($diagnosis[0])){
+            $msg = 'データがありません。';
+        }
+        return redirect('diagnoses.diagnosis-top',compact('diagnosis','msg'));
+        
     }
 }
