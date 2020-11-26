@@ -293,10 +293,8 @@ class DiagnosesController extends Controller
     public function edit($id)
     {
         //過去の診断結果の編集
-        $diagnosis = Diagnosis::find($id);
-
-
-        return view('diagnoses.diagnosis-16type-edit',compact('diagnosis'));
+        //$diagnosis = Diagnosis::find($id);
+        //return view('diagnoses.diagnosis-16type-edit',compact('diagnosis'));
 
     }
 
@@ -310,12 +308,14 @@ class DiagnosesController extends Controller
     public function update(Request $request, $id)
     {
         //診断結果の更新
-        
+        /* 
         $diagnosis = Diagnosis::find($id);
         $diagnosis->fill( $request->all() ); 
         $diagnosis->save();
+        */
+
         
-        return redirect('diagnoses.diagnosis-top',compact('diagnosis'));
+        //return redirect('diagnoses.diagnosis-top');
     }
 
     /**
