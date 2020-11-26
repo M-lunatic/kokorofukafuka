@@ -78,13 +78,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             
         ]);
-            // ホーム画面へリダイレクト
-            return redirect('/home');
+            //
+            return view('verify');
 
-    }
-    protected function destroy(){
-        //退会機能
-        //return redirect('/');
     }
 
 }

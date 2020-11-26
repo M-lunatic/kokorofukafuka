@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    //protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -39,34 +39,12 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-
-
     protected function index()
     {
-        //$user = Auth::user();    //現在認証されているユーザーの取得
-        return view('/home');
+        $user = Auth::user();
+        return view('/',compact('user'));
     }
 
-    protected function show()
-    {
-        
-        //return view('/login');
-    }
-    protected function update()
-    {
-        //$user = Auth::user();
-        //return view('mypage/update');
-    }
-    protected function edit()
-    {
-        
-        //return view('mypage/edit');
-    }
-    protected function destroy()
-    {
-        
-        //return view('mypage/delete');
-    }
-
+ 
 
 }
