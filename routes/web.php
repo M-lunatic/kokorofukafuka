@@ -14,30 +14,26 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('top');
+    $user = Auth::user();
+    return view('top',compact('user'));
 });
+
 
 
 //email_verified_at
 Auth::routes(['verify' => true]);
-//Auth::routes();
 
-Route::get('/home','HomeController@index')->middleware('verified');
-Route::get('/mypage','HomeController@mypage')->name('mypage');
-
-
-//Route::edit('mypage/{id}/edit','LoginController@edit')->middleware('auth');
-
-/*
-Route::edit('mypage/{id}/edit','LoginController@edit')->middleware('auth');
-Route::put('mypage/update','LoginController@Update')->middleware('auth');
-Route::delete('mypage/user_delete','RegisterController@destroy')->middleware('auth');
-*/
 
 Route::get('verification.verify', function(){
     return view('auth.verified');
 })->middleware('verified');
 
+Route::get('mypage','HomeController@mypage')->middleware('verified');
+Route::get('home/{id}/show','HomeController@show')->middleware('verified');
+Route::get('home/{id}/edit','HomeController@edit')->middleware('verified');
+Route::put('home/update','HomeController@update')->middleware('verified');
+Route::get('home/question', 'HomeController@question')->middleware('verified');
+Route::delete('home/destroy','HomeController@destroy')->middleware('verified');
 
 //性格診断ページ
 /*
@@ -54,6 +50,9 @@ Route::delete('Diagnoses/destroy','DiagnosesController@destroy')->middleware('ve
 //まとめると
 Route::resource('diagnoses','DiagnosesController')->middleware('verified');
 
-
+//ヘルパー関数のチェック
+Route::get('/path', function () {
+    return view('path.index');
+});
 
 
