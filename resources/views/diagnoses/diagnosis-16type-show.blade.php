@@ -12,7 +12,7 @@
     <p>※クリックするとGoogleの検索ページに飛びます。</p><br />
 
     <a href ="{{ route('diagnoses.index') }}">今までやった診断結果一覧へ</a>
-
+    
 
 </div>
 

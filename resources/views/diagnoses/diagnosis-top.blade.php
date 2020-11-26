@@ -24,6 +24,8 @@
             <td>タイプ : <a href ="{{ route('diagnoses.show',$dia->id ) }}">{{ $dia->type }} </a></td>
             <td>やった日時 : {{ $dia->created_at }} </td>
             <td>やりなおした日時 : {{ $dia->updated_at }} </td>
+
+        
             <td>
                 <form action="{{ route('diagnoses.destroy',$dia->id )}}" method="POST">
                     @csrf
