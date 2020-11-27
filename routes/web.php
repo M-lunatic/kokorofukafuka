@@ -28,12 +28,12 @@ Route::get('verification.verify', function(){
     return view('auth.verified');
 })->middleware('verified');
 
-Route::get('mypage','HomeController@mypage')->middleware('verified');
-Route::get('home/{id}/show','HomeController@show')->middleware('verified');
-Route::get('home/{id}/edit','HomeController@edit')->middleware('verified');
-Route::put('home/update','HomeController@update')->middleware('verified');
-Route::get('home/question', 'HomeController@question')->middleware('verified');
-Route::delete('home/destroy','HomeController@destroy')->middleware('verified');
+Route::get('/mypage','HomeController@mypage')->middleware('verified')->name('mypage');
+Route::get('/home/{home}/show','HomeController@show')->middleware('verified')->name('profile.show');
+Route::get('/home/{page}/edit','HomeController@useredit')->middleware('verified')->name('profile.edit');
+Route::put('/home/{page}/update','HomeController@update')->middleware('verified')->name('profile.update');
+Route::get('/home/question', 'HomeController@question')->middleware('verified')->name('profile.question');
+Route::delete('/home/destroy','HomeController@destroy')->middleware('verified')->name('profile.destroy');
 
 //性格診断ページ
 /*

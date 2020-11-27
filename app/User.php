@@ -54,9 +54,29 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $table = 'users';
     protected $dates = ['deleted_at'];
 
+    /*
+    public static $editRules = array(
 
+        'user_id' => 'required|string|max:255|unique:users',
+        'user_name' => 'required|string|max:50',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password'=> 'required|string|min:6|',
+        
+         );
+*/
+    public static $editPasswordRules = array(
+        'password'=> 'required|string|min:6|',
+    );
 
-
+    public static $editEmailRules = array(
+        'email' => 'required|string|email|max:255|unique:users',
+    );
+    public static $editUseridRules = array(
+        'user_id' => 'required|string|max:255|unique:users',
+    );
+    public static $editNameRules = array(
+        'user_name' => 'required|string|max:50',
+    );
 
 }
 
